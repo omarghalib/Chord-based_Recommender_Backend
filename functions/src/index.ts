@@ -12,6 +12,7 @@ export const getSongRecommendations =
     console.log("songId " + songId);
     return new Promise((resolve, reject) => {
       firebaseAdmin.database().ref()
+          .child("scores")
           .child(songId).
           child("similarityScores").
           orderByChild("score").
@@ -20,7 +21,7 @@ export const getSongRecommendations =
           once("value", function(snapshot) {
             const result = snapshot.val();
             if (result) {
-              console.log(result)
+              console.log(result);
               return resolve(result);
             } else {
               reject(new Error("result not found")
